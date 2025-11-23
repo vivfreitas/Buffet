@@ -3,7 +3,6 @@ package org.com.programming.login.service;
 import org.com.programming.login.entities.UserEntity;
 import org.com.programming.login.infra.authManagerConfig.ApplicationConfig;
 import org.com.programming.login.jpa.UserJpa;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

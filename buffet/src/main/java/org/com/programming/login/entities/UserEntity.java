@@ -1,5 +1,6 @@
 package org.com.programming.login.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,13 +19,25 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String nameUser;
     private String passwordUser;
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private List<PartyEntity> partyEntities;
 
     public UserEntity(){}
 
-    public UserEntity(Long idUser, String nameUser, String passwordUser) {
+    public UserEntity(Long idUser, String nameUser, List<PartyEntity> partyEntities, String passwordUser) {
         this.idUser = idUser;
         this.nameUser = nameUser;
         this.passwordUser = passwordUser;
+        this.partyEntities = partyEntities;
+    }
+
+    public List<PartyEntity> getPartyEntities() {
+        return partyEntities;
+    }
+
+    public void setPartyEntities(List<PartyEntity> partyEntities) {
+        this.partyEntities = partyEntities;
     }
 
     public Long getIdUser() {

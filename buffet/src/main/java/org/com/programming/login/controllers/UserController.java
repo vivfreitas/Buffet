@@ -43,11 +43,10 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<UserEntity> getUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Aqui representa o crachá do usuário que já está no bolso e verificado pelo JwtFilter.
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal(); // Dessa forma conseguimos pegar o usuário.
         return ResponseEntity.ok(userEntity);
     }
-
 
     @PostMapping("/login")
     public AuthResponse/*token*/loginUser(@RequestBody AuthRequest request){

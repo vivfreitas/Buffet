@@ -30,7 +30,7 @@ public class SecurityFilterChainClass {
                 AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> {
-                            auth.requestMatchers("/user/create").permitAll();
+                            auth.requestMatchers("/user/create").permitAll(); /* PermiteAll -> liberado para qualquer ROLE. */
                             auth.requestMatchers("/user/me").permitAll();
                             auth.requestMatchers("/user/login").permitAll();
                             auth.anyRequest().authenticated();
