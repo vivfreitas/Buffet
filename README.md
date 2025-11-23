@@ -8,5 +8,9 @@ Tecnologias utilizadas:
 * Springboot para API.
 * HTML e CSS para interface.
 * JavaScript para consumo de API.
+* Banco de dados: MySQL.
 
 ---
+
+**TELA DE LOGIN FRONT:**
+![img.png](img.png)
