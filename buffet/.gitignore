@@ -4,6 +4,9 @@ target/
 !**/src/test/**/target/
 .kotlin
 
+# Exclui o arquivo de configuração de credenciais
+buffet/src/main/resources/application.properties
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
@@ -37,6 +40,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-# Exclui o arquivo de configuração de credenciais
-buffet/src/main/resources/application.properties

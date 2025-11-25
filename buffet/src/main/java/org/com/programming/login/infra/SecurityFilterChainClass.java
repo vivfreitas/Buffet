@@ -33,6 +33,7 @@ public class SecurityFilterChainClass {
                             auth.requestMatchers("/user/create").permitAll(); /* PermiteAll -> liberado para qualquer ROLE. */
                             auth.requestMatchers("/user/me").permitAll();
                             auth.requestMatchers("/user/login").permitAll();
+                            auth.requestMatchers("/party/create").permitAll();
                             auth.anyRequest().authenticated();
                         })
                 .sessionManagement( session -> session.sessionCreationPolicy(

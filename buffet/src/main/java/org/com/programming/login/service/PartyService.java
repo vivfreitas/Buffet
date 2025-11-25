@@ -3,6 +3,7 @@ package org.com.programming.login.service;
 import org.com.programming.login.entities.AddressEntity;
 import org.com.programming.login.entities.DTO.AddressResponse;
 import org.com.programming.login.entities.DTO.PartyCreateResponse;
+import org.com.programming.login.entities.DTO.PartyReadResponse;
 import org.com.programming.login.entities.PartyEntity;
 import org.com.programming.login.entities.UserEntity;
 import org.com.programming.login.infra.restTemplate.ViaCepRest;
@@ -12,6 +13,8 @@ import org.com.programming.login.jpa.UserJpa;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PartyService {
@@ -74,4 +77,23 @@ public class PartyService {
         address.setCity(response.getLocalidade());
         return address;
     }
+
+//    READ ALL
+    public List<PartyReadResponse> readAll(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
+
+        // Dessa forma buscando as informações APENAS DO USUÁRIO AUTENTICADO E NÃO UM GET DE TODOS. Último no FRONT!
+        Long userId = userEntity.getIdUser();
+        List<PartyEntity> partyUser = partyRepository.findByUsersIdUser(userId);
+
+        return partyUser.stream()
+                .map(c -> new PartyReadResponse(
+                                    c.getNameParty(),
+                                    c.getPhoneParty(),
+                                    c.getNumberParty(),
+                                    c.getAddress())).toList();
+        }
+
 }
+
