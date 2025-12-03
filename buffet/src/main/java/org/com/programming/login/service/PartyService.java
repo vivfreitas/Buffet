@@ -95,5 +95,7 @@ public class PartyService {
                                     c.getAddress())).toList();
         }
 
+//        UPDATE PARTY
+    public void updatePary(){}
 }
 
