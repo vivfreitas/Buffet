@@ -4,10 +4,12 @@ import org.com.programming.login.entities.DTO.PartyCreateResponse;
 import org.com.programming.login.entities.DTO.PartyReadResponse;
 import org.com.programming.login.entities.PartyEntity;
 import org.com.programming.login.service.PartyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("party")
@@ -19,8 +21,11 @@ public class PartyController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<PartyCreateResponse> createParty(@RequestBody PartyEntity partyEntity){
+    public ResponseEntity<Object> createParty(@RequestBody PartyEntity partyEntity){
         PartyCreateResponse service = partyService.createParty(partyEntity);
+        if (service.addressEntity().getZip_code() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CEP Não encontrado.");
+        }
         return ResponseEntity.ok(service);
     }
 
