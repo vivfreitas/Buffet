@@ -34,35 +34,35 @@ public class PartyService {
     //    CREATE PARTY
     public PartyCreateResponse createParty(PartyEntity partyEntity){
 
-        /* Pega as informações do usuário daquele Token. */
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity userAuth = (UserEntity) auth.getPrincipal();
+            /* Pega as informações do usuário daquele Token. */
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            UserEntity userAuth = (UserEntity) auth.getPrincipal();
 
-        AddressResponse address = viaCepRest.consultaCEP(partyEntity.getCep());
-        if (address == null){
-            return null;
-        }
-        if (!auth.isAuthenticated()){
-            return null;
-        }
+            AddressResponse address = viaCepRest.consultaCEP(partyEntity.getCep());
+            try {
+                AddressEntity addressEntity = mapAddressEntity(address);
+                addressEntity.setNumberHome(partyEntity.getNumberParty());
+                AddressEntity repositoryAd = addressRepository.save(addressEntity);
 
-        AddressEntity addressEntity = mapAddressEntity(address);
-        addressEntity.setNumberHome(partyEntity.getNumberParty());
-        AddressEntity repositoryAd = addressRepository.save(addressEntity);
+                partyEntity.setAddress(repositoryAd);
+                partyEntity.setUsers(userAuth);
+                partyRepository.save(partyEntity);
 
-        partyEntity.setAddress(repositoryAd);
-        partyEntity.setUsers(userAuth);
-        partyRepository.save(partyEntity);
-
-        return new PartyCreateResponse(
-                partyEntity.getIdParty(),
-                partyEntity.getNameParty(),
-                partyEntity.getPhoneParty(),
-                partyEntity.getAddress(),
-                partyEntity.getUsers().getIdUser(),
-                partyEntity.getUsers().getNameUser()
-        );
+                return new PartyCreateResponse(
+                        partyEntity.getIdParty(),
+                        partyEntity.getNameParty(),
+                        partyEntity.getPhoneParty(),
+                        partyEntity.getAddress(),
+                        partyEntity.getUsers().getIdUser(),
+                        partyEntity.getUsers().getNameUser()
+                );
+            } catch (NullPointerException e) {
+                return null;
+            }
     }
+
+
+
 
     private AddressEntity mapAddressEntity(AddressResponse response) {
         /* Mapeamento de endereço:

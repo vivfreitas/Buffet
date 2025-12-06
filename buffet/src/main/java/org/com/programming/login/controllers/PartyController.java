@@ -23,7 +23,8 @@ public class PartyController {
     @PostMapping("create")
     public ResponseEntity<Object> createParty(@RequestBody PartyEntity partyEntity){
         PartyCreateResponse service = partyService.createParty(partyEntity);
-        if (service.addressEntity().getZip_code() == null){
+
+        if (service == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CEP Não encontrado.");
         }
         return ResponseEntity.ok(service);

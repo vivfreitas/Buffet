@@ -19,15 +19,11 @@ public class ViaCepRest {
         String cepClear = cep.replaceAll("[^0-9]", "");
 
         try {
-            AddressResponse response = restTemplate.getForObject(
+            return restTemplate.getForObject(
                     URL,
                     AddressResponse.class,
                     cepClear
             );
-            if (response == null){
-                return null;
-            }
-            return response;
         }catch (Exception e){
             System.out.println("Erro ao buscar o CEP: " + e.getMessage());
             return null;
