@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <h1 id="welcomeMessage"></h1> 
+        <p>Parabéns, você completou a integração Front-end/Back-end!</p>
+        <button onclick="logout()">Sair / Limpar Token</button>
+    </main>
+
+    <script>
+        // Função para simular o "Vivian logou"
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('loggedUsername');
+            if (username) {
+                document.getElementById('welcomeMessage').textContent = `${username} logou com sucesso!`;
+            } else {
+                document.getElementById('welcomeMessage').textContent = 'Você não está logado.';
+            }
+        });
+
+        function logout() {
+            // Ela deleta o token JWT
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('loggedUsername');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
